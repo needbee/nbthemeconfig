@@ -123,7 +123,7 @@ static NSMutableDictionary *cachedFonts = nil;
     
     NSMutableArray *colors;
     if( !( colors = [cachedGradientColors objectForKey:gradientName] ) ) {
-        int capacity = [colorsConfig count];
+        NSUInteger capacity = [colorsConfig count];
         colors = [[NSMutableArray alloc] initWithCapacity:capacity];
         NSEnumerator *colorsEnum = [colorsConfig objectEnumerator];
         NSString *colorName;
