@@ -21,6 +21,7 @@
 
     // simple colors and patterns
     self.label.textColor = [NBThemeConfig colorForComponent:@"mainContentText"];
+    self.label.font = [NBThemeConfig fontForComponent:@"mainContentText"];
     self.contentView.backgroundColor = [NBThemeConfig colorForComponent:@"mainContentBackground"];
     
     // shadow

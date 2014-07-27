@@ -13,6 +13,11 @@
 		<key>mainContentText</key>
 		<string>white</string>
 	</dict>
+	<key>componentFonts</key>
+	<dict>
+		<key>mainContentText</key>
+		<string>medium</string>
+	</dict>
 	<key>namedColors</key>
 	<dict>
 		<key>black</key>
@@ -50,6 +55,16 @@
 			<real>1</real>
 			<real>1</real>
 		</array>
+	</dict>
+	<key>namedFonts</key>
+	<dict>
+		<key>medium</key>
+		<dict>
+			<key>name</key>
+			<string>Avenir-Book</string>
+			<key>size</key>
+			<integer>19</integer>
+		</dict>
 	</dict>
 	<key>namedGradients</key>
 	<dict>

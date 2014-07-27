@@ -15,4 +15,6 @@
 
 +(void)setGradient:(CAGradientLayer *)gradient byComponentName:(NSString *)componentName;
 
++(UIFont *)fontForComponent:(NSString *)componentName;
+
 @end

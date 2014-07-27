@@ -8,21 +8,26 @@
 #import "NBThemeConfig.h"
 
 #define COMPONENTS_KEY @"components"
+#define COMPONENT_FONTS_KEY @"componentFonts"
 #define NAMED_COLORS_KEY @"namedColors"
 #define NAMED_GRADIENTS_KEY @"namedGradients"
 #define NAMED_PATTERNS_KEY @"namedPatterns"
+#define NAMED_FONTS_KEY @"namedFonts"
 #define GRADIENT_COLORS_KEY @"colors"
 #define GRADIENT_LOCATIONS_KEY @"locations"
 #define RED_KEY 0
 #define GREEN_KEY 1
 #define BLUE_KEY 2
 #define ALPHA_KEY 3
+#define FONT_NAME_KEY @"name"
+#define FONT_SIZE_KEY @"size"
 
 @interface NBThemeConfig ()
 
 +(void)setUpStatics;
 +(UIColor *)colorNamed:(NSString *)colorName;
 +(UIColor *)patternNamed:(NSString *)patternName;
++(UIFont *)fontNamed:(NSString *)fontName;
 
 @end
 
@@ -32,6 +37,7 @@ static NSDictionary *config = nil;
 static NSMutableDictionary *cachedColors = nil;
 static NSMutableDictionary *cachedGradientColors = nil;
 static NSMutableDictionary *cachedPatternColors = nil;
+static NSMutableDictionary *cachedFonts = nil;
 
 +(void)setUpStatics {
     if( nil == config ) {
@@ -45,6 +51,9 @@ static NSMutableDictionary *cachedPatternColors = nil;
     }
     if( nil == cachedPatternColors ) {
         cachedPatternColors = [[NSMutableDictionary alloc] init];
+    }
+    if( nil == cachedFonts ) {
+        cachedFonts = [[NSMutableDictionary alloc] init];
     }
 }
 
@@ -71,6 +80,17 @@ static NSMutableDictionary *cachedPatternColors = nil;
         [cachedPatternColors setObject:color forKey:patternName];
     }
     return color;
+}
+
++(UIFont *)fontNamed:(NSString *)fontName {
+    UIFont *font;
+    if( !(font = [cachedFonts objectForKey:fontName] ) ) {
+        NSDictionary *fontDict = [[config objectForKey:NAMED_FONTS_KEY] objectForKey:fontName];
+        font = [UIFont fontWithName:[fontDict objectForKey:FONT_NAME_KEY]
+                               size:[[fontDict objectForKey:FONT_SIZE_KEY] intValue]];
+        [cachedFonts setObject:font forKey:fontName];
+    }
+    return font;
 }
 
 +(UIColor *)colorForComponent:(NSString *)componentName {
@@ -115,6 +135,16 @@ static NSMutableDictionary *cachedPatternColors = nil;
 
     gradient.colors = colors;
     gradient.locations = locations;
+}
+
++(UIFont *)fontForComponent:(NSString *)componentName {
+    
+    [NBThemeConfig setUpStatics];
+    
+    NSString *fontName = [[config objectForKey:COMPONENT_FONTS_KEY] objectForKey:componentName];
+    UIFont *font =  [NBThemeConfig fontNamed:fontName];
+    
+    return font;
 }
 
 @end
